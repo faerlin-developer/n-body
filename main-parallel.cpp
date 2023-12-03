@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <random>
+#include <sstream>
 #include "Particle.h"
 #include "State.h"
 #include "Vector.h"
@@ -44,7 +45,6 @@ int main(int argc, char *argv[]) {
         MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
     }
 
-
     auto N = 1260;
     auto size = N / shared_size;
     auto start = shared_rank * size;
@@ -67,7 +67,12 @@ int main(int argc, char *argv[]) {
             MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
         }
 
-        auto window = sf::RenderWindow(sf::VideoMode(800, 600), "SFML works!");
+        auto window = sf::RenderWindow(sf::VideoMode(800, 800), "SFML works!");
+
+        sf::Vector2u size = window.getSize();
+        sf::View view(sf::Vector2f(0, 0), sf::Vector2f(size.x, size.y));
+        window.setView(view);
+
         centerWindow(&window);
 
         for (int i = 0; i < N; i++) {
@@ -80,7 +85,7 @@ int main(int argc, char *argv[]) {
             pos.setMagnitude(random(100, 200));
             vel.setMagnitude(random(5, 10));
 
-            particles[i] = Particle(mass, pos.x + 400, pos.y + 300, vel.x, vel.y);
+            particles[i] = Particle(mass, pos.x, pos.y, vel.x, vel.y);
         }
 
         int frames = 0;
@@ -88,6 +93,7 @@ int main(int argc, char *argv[]) {
         sf::Clock clock_update;
         sf::Clock clock_draw;
 
+        float frame_rate = 0;
         window.setFramerateLimit(24);
         while (window.isOpen()) {
             clock_total.restart();
@@ -132,6 +138,15 @@ int main(int argc, char *argv[]) {
 
             auto draw_time = clock_draw.getElapsedTime();
 
+            sf::Font arial;
+            arial.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf");
+            std::stringstream s;
+            s << "frame rate: " << frame_rate;
+            sf::Text text(s.str(), arial, 15);
+            text.setPosition(-(size.x / 2.0), -(size.y / 2.0));
+            text.setFillColor(sf::Color::White);
+            window.draw(text);
+
             window.display();
             auto total_time = clock_total.getElapsedTime();
 
@@ -140,7 +155,7 @@ int main(int argc, char *argv[]) {
                 auto update_time_s = update_time.asSeconds();
                 auto draw_time_s = draw_time.asSeconds();
                 auto total_time_s = total_time.asSeconds();
-                auto frame_rate = 1.f / total_time_s;
+                frame_rate = 1.f / total_time_s;
 
                 std::cout << frame_rate << " "
                           << update_time_s << " "
@@ -154,8 +169,8 @@ int main(int argc, char *argv[]) {
 
     } else {
         MPI_Win mpi_window;
-        Particle *particless;
-        auto err = MPI_Win_allocate_shared(0, sizeof(Particle), MPI_INFO_NULL, shared_comm, &particless, &mpi_window);
+        Particle *empty;
+        auto err = MPI_Win_allocate_shared(0, sizeof(Particle), MPI_INFO_NULL, shared_comm, &empty, &mpi_window);
 
         if (err != MPI_SUCCESS) {
             MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
@@ -196,15 +211,9 @@ void centerWindow(sf::RenderWindow *window) {
 
 void updateAcceleration(int i, Particle *particles, int N) {
 
-    auto G = 0.1;
     for (int j = 0; j < N; j++) {
         if (i != j) {
-            auto acc = particles[j].pos - particles[i].pos;
-            // Needs to constraint minimum value of distance to prevent divergence on the value of the magnitude
-            auto distance = std::min(std::max(10.f, acc.magnitudeSquared()), 1000.f);
-            auto magnitude = G * particles[j].mass / distance;
-            acc.setMagnitude(magnitude);
-            particles[i].acc = particles[i].acc + acc;
+            particles[i].attractedBy(particles[j]);
         }
     }
 }

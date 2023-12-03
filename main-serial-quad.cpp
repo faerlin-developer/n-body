@@ -3,14 +3,15 @@
 #include <algorithm>
 #include <random>
 #include <iostream>
+#include <limits>
 #include "Particle.h"
 #include "State.h"
 #include "Vector.h"
 #include "Particle.h"
+#include "Boundary.h"
+#include "QuadTree.h"
 
 void centerWindow(sf::RenderWindow *window);
-
-void updateAcceleration(int i, Particle *particles, int size);
 
 float random(float min, float max) {
     std::random_device rd;
@@ -19,15 +20,20 @@ float random(float min, float max) {
     return dist(mt);
 }
 
+void update(Particle *particles, int i, Node<int> *node);
+
+double dist(float x0, float y0, float x1, float y1);
+
 int main(int argc, char *argv[]) {
 
-    auto window = sf::RenderWindow(sf::VideoMode(800, 600), "SFML works!");
+    auto window = sf::RenderWindow(sf::VideoMode(800, 800), "SFML works!");
     centerWindow(&window);
 
     auto N = 1100;
     auto particles = new Particle[N];
     for (int i = 0; i < N; i++) {
-        auto mass = random(5, 15);
+        // auto mass = random(5, 15);
+        auto mass = 10.0f;
         auto x = random(-1, 1);
         auto y = random(-1, 1);
         auto pos = Vector(x, y).unit();
@@ -36,7 +42,7 @@ int main(int argc, char *argv[]) {
         pos.setMagnitude(random(100, 200));
         vel.setMagnitude(random(5, 10));
 
-        particles[i] = Particle(mass, pos.x + 400, pos.y + 300, vel.x, vel.y);
+        particles[i] = Particle(mass, pos.x + 400, pos.y + 400, vel.x, vel.y);
     }
 
     int frames = 0;
@@ -54,10 +60,34 @@ int main(int argc, char *argv[]) {
                 window.close();
         }
 
-
         clock_update.restart();
+
+        auto xMax = std::numeric_limits<float>::min();
+        auto xMin = std::numeric_limits<float>::max();
+        auto yMax = std::numeric_limits<float>::min();
+        auto yMin = std::numeric_limits<float>::max();
         for (int i = 0; i < N; i++) {
-            updateAcceleration(i, particles, N);
+            xMax = std::max(xMax, particles[i].pos.x);
+            xMin = std::min(xMin, particles[i].pos.x);
+            yMax = std::max(yMax, particles[i].pos.y);
+            yMin = std::min(yMin, particles[i].pos.y);
+        }
+
+        int width = std::ceil((xMax - xMin) / 2.0f);
+        int height = std::ceil((yMax - yMin) / 2.0f);
+        int xCenter = std::ceil(xMin + width);
+        int yCenter = std::ceil(yMin + height);
+
+        auto boundary = Boundary::Rectangle(xCenter, yCenter, width, height);
+        auto qTree = new QuadTree<int>(boundary, 8);
+
+        for (int i = 0; i < N; i++) {
+            qTree->insert(Point<int>(particles[i].pos.x, particles[i].pos.y, i));
+        }
+
+        auto root = qTree->root;
+        for (int i = 0; i < N; i++) {
+            update(particles, i, root);
         }
 
         for (int i = 0; i < N; i++) {
@@ -68,7 +98,11 @@ int main(int argc, char *argv[]) {
         auto update_time = clock_update.getElapsedTime();
 
         clock_draw.restart();
+
         window.clear();
+
+        qTree->draw(window);
+
         for (int i = 0; i < N; i++) {
             auto r = particles[i].radius;
             sf::CircleShape circle(r);
@@ -109,38 +143,31 @@ void centerWindow(sf::RenderWindow *window) {
     window->setPosition(pos);
 }
 
-void updateAcceleration(int i, Particle *particles, int size) {
-
-    auto G = 0.1;
-    for (int j = 0; j < size; j++) {
-        if (i != j) {
-            auto acc = particles[j].pos - particles[i].pos;
-            // Needs to constraint minimum value of distance to prevent divergence on the value of the magnitude
-            auto distance = std::min(std::max(10.f, acc.magnitudeSquared()), 1000.f);
-            auto magnitude = G * particles[j].mass / distance;
-            acc.setMagnitude(magnitude);
-            particles[i].acc = particles[i].acc + acc;
-        }
-    }
+double dist(float x0, float y0, float x1, float y1) {
+    return std::pow(x1 - x0, 2) + std::pow(y1 - y0, 2);
 }
 
-//        Vector v = Vector(100, 100);
-//        Vector origin = Vector(30, 100);
-//        v.rotate(M_PI * (4.f / 3), origin);
-//
-//        sf::CircleShape circle(2);
-//        circle.setPosition(30 - 2, 100 - 2);
-//
-//        sf::Vertex line[] = {
-//                sf::Vertex(sf::Vector2f(30, 100)),
-//                sf::Vertex(sf::Vector2f(v.x, v.y))
-//        };
-//        window.draw(line, 2, sf::Lines);
-//        window.draw(circle);
+void update(Particle *particles, int i, Node<int> *node) {
 
-//     auto M = 10000;
-//    float G = 1;
-//    auto vMagnitude = std::sqrt(G * M / 200);
-// particles[0] = Particle(0.5, 400, 100, vMagnitude, 0);
-// particles[1] = Particle(0.5, 400, 500, vMagnitude, 0);
-// particles[2] = Particle(M, 400, 300, 0, 0);
+    // 25 ** 2 = 625
+    auto d = dist(particles[i].pos.x, particles[i].pos.y, node->boundary.xCenter, node->boundary.yCenter);
+    if (d < 625) {
+        for (auto &point: node->points) {
+            auto j = point.data;
+            if (i != j) {
+                particles[i].attractedBy(particles[j]);
+            }
+
+        }
+    } else if (!node->points.empty()) {
+        auto ghost = Particle(10 * node->points.size(),
+                              node->boundary.xCenter, node->boundary.yCenter,
+                              0, 0);
+        particles[i].attractedBy(ghost);
+    }
+
+    for (auto child: node->children) {
+        update(particles, i, child);
+    }
+
+}

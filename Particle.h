@@ -42,4 +42,15 @@ public:
 
         return *this;
     }
+
+    // update the acceleration of this particle due to the gravitational influence of other
+    // Needs to constraint minimum value of distance to prevent divergence on the value of the magnitude
+    void attractedBy(Particle &other) {
+        const float G = 0.1;
+        auto acc = other.pos - this->pos;
+        const auto magnitude = G * other.mass / std::min(std::max(10.f, acc.magnitudeSquared()), 1000.f);
+        acc.setMagnitude(magnitude);
+        this->acc = this->acc + acc;
+    }
+
 };
