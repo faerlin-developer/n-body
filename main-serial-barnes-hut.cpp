@@ -14,6 +14,30 @@
 template<class U, class V>
 void draw(sf::RenderWindow &window, Node<U, V> *node);
 
+void drawCircle(Particle &particle, sf::RenderWindow &window) {
+    auto r = particle.radius;
+    sf::CircleShape circle(r);
+    circle.setPosition(particle.pos.x - r, particle.pos.y - r);
+    circle.setFillColor(sf::Color{128, 128, 128});
+    circle.setOutlineColor(sf::Color::Green);
+    circle.setOutlineThickness(2.0f);
+    window.draw(circle);
+}
+
+void drawParticles(Particle *particles, int size, sf::RenderWindow &window) {
+
+    for (int i = 0; i < size; i++) {
+        auto r = particles[i].radius;
+        sf::CircleShape circle(r);
+        circle.setPosition(particles[i].pos.x - r, particles[i].pos.y - r);
+        circle.setFillColor(sf::Color{128, 128, 128});
+        circle.setOutlineColor(sf::Color::White);
+        circle.setOutlineThickness(2.0f);
+        window.draw(circle);
+    }
+
+}
+
 void centerWindow(sf::RenderWindow *window) {
     auto desktop = sf::VideoMode::getDesktopMode();
     auto pos = sf::Vector2i(desktop.width / 2 - window->getSize().x / 2, desktop.height / 2 - window->getSize().y / 2);
@@ -35,14 +59,14 @@ int main(int argc, char *argv[]) {
     auto N = 1100;
     auto particles = new Particle[N];
     for (int i = 0; i < N; i++) {
-        auto mass = random(5, 15);
-        // auto mass = 10.0f;
+        //auto mass = random(5, 15);
+        auto mass = 10.0f;
         auto x = random(-1, 1);
         auto y = random(-1, 1);
         auto pos = Vector(x, y).unit();
         auto vel = pos;
         vel.rotate(M_PI / 2, Vector(0, 0));
-        pos.setMagnitude(random(100, 200));
+        pos.setMagnitude(random(100, 300));
         vel.setMagnitude(random(5, 10));
 
         particles[i] = Particle(mass, pos.x + 400, pos.y + 400, vel.x, vel.y);
@@ -50,8 +74,36 @@ int main(int argc, char *argv[]) {
 
     Simulator::BarnesHut simulator;
 
+    /*
+    window.clear();
+
+    simulator.updateQuadTree(particles, N);
+    simulator.updateCentreMass(particles, simulator.qTree->root);
+    // draw(window, simulator.qTree->root);
+
+    simulator.updateParticle(particles, 0, simulator.qTree->root, window);
+    // drawCircle(particles[0], window);
+
+    for (int i = 0; i < N; i++) {
+        particles[i].vel = particles[i].vel + particles[i].acc;
+        particles[i].pos = particles[i].pos + particles[i].vel;
+        particles[i].acc.set(0, 0);
+    }
+
+    drawParticles(particles, N, window);
+
+    window.display();
+     */
+
+    int frames = 0;
+    sf::Clock clock_total;
+    sf::Clock clock_update;
+    sf::Clock clock_draw;
+
     window.setFramerateLimit(24);
+
     while (window.isOpen()) {
+        clock_total.restart();
 
         sf::Event event{};
         while (window.pollEvent(event)) {
@@ -61,11 +113,32 @@ int main(int argc, char *argv[]) {
 
         window.clear();
 
-        simulator.update(particles, N, 0, N);
-        draw(window, simulator.qTree->root);
+        simulator.updateQuadTree(particles, N);
+        simulator.updateCentreMass(particles, simulator.qTree->root);
+        // draw(window, simulator.qTree->root);
 
+        for (int i = 0; i < N; i++) {
+            simulator.updateParticle(particles, i, simulator.qTree->root, window);
+        }
+        // drawCircle(particles[0], window);
+
+        for (int i = 0; i < N; i++) {
+            particles[i].vel = particles[i].vel + particles[i].acc;
+            particles[i].pos = particles[i].pos + particles[i].vel;
+            particles[i].acc.set(0, 0);
+        }
+
+        drawParticles(particles, N, window);
 
         window.display();
+
+        auto total_time = clock_total.getElapsedTime();
+
+        if (frames % 24 == 0) {
+            auto total_time_s = total_time.asSeconds();
+            auto frame_rate = 1.f / total_time_s;
+            std::cout << frame_rate << std::endl;
+        }
     }
 
     window.close();

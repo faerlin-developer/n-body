@@ -21,19 +21,20 @@ float random(float min, float max) {
 
 int main(int argc, char *argv[]) {
 
-    auto window = sf::RenderWindow(sf::VideoMode(800, 600), "SFML works!");
+    auto window = sf::RenderWindow(sf::VideoMode(800, 800), "SFML works!");
     centerWindow(&window);
 
     auto N = 1100;
     auto particles = new Particle[N];
     for (int i = 0; i < N; i++) {
-        auto mass = random(5, 15);
+        // auto mass = random(5, 15);
+        auto mass = 10.0f;
         auto x = random(-1, 1);
         auto y = random(-1, 1);
         auto pos = Vector(x, y).unit();
         auto vel = pos;
         vel.rotate(M_PI / 2, Vector(0, 0));
-        pos.setMagnitude(random(100, 200));
+        pos.setMagnitude(random(100, 300));
         vel.setMagnitude(random(5, 10));
 
         particles[i] = Particle(mass, pos.x + 400, pos.y + 300, vel.x, vel.y);

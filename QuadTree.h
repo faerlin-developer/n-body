@@ -9,13 +9,13 @@
 template<class T>
 class Point {
 public:
-    int x;
-    int y;
+    float x;
+    float y;
     T data;
 
     Point() = delete;
 
-    Point(int x, int y, T data) : x(x), y(y), data(data) {}
+    Point(float x, float y, T data) : x(x), y(y), data(data) {}
 };
 
 template<class T>
@@ -128,7 +128,7 @@ private:
 
         sf::RectangleShape rectangle(sf::Vector2f(2 * node->boundary.w, 2 * node->boundary.h));
         rectangle.setPosition(node->boundary.xCenter - node->boundary.w, node->boundary.yCenter - node->boundary.h);
-        rectangle.setFillColor(sf::Color::Black);
+        rectangle.setFillColor(sf::Color::Transparent);
         rectangle.setOutlineColor(sf::Color::White);
         rectangle.setOutlineThickness(1.0f);
         window.draw(rectangle);

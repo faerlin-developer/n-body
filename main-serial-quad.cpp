@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
         auto pos = Vector(x, y).unit();
         auto vel = pos;
         vel.rotate(M_PI / 2, Vector(0, 0));
-        pos.setMagnitude(random(100, 200));
+        pos.setMagnitude(random(100, 300));
         vel.setMagnitude(random(5, 10));
 
         particles[i] = Particle(mass, pos.x + 400, pos.y + 400, vel.x, vel.y);
@@ -73,10 +73,10 @@ int main(int argc, char *argv[]) {
             yMin = std::min(yMin, particles[i].pos.y);
         }
 
-        int width = std::ceil((xMax - xMin) / 2.0f);
-        int height = std::ceil((yMax - yMin) / 2.0f);
-        int xCenter = std::ceil(xMin + width);
-        int yCenter = std::ceil(yMin + height);
+        float width = std::ceil((xMax - xMin) / 2.0f);
+        float height = std::ceil((yMax - yMin) / 2.0f);
+        float xCenter = std::ceil(xMin + width);
+        float yCenter = std::ceil(yMin + height);
 
         auto boundary = Boundary::Rectangle(xCenter, yCenter, width, height);
         auto qTree = new QuadTree<int>(boundary, 8);

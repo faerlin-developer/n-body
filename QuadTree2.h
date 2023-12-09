@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 template<class U, class V>
 class Node;
@@ -40,6 +41,7 @@ public:
     Region::Rectangle region;
     std::vector<Point<U>> points;
     std::vector<Node<U, V> *> children;
+    V data;
 
     Node(Region::Rectangle region, int capacity) : region(region), capacity(capacity) {}
 
@@ -60,7 +62,7 @@ public:
 
             for (Node<U, V> *child: children) {
                 if (child->insert(point)) {
-                    continue;
+                    break;
                 }
             }
         }
