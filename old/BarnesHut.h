@@ -12,6 +12,7 @@ namespace Simulator {
         float total_mass;
         float xCentreMass;
         float yCentreMass;
+        Particle particle;
     };
 
     class BarnesHut {
@@ -87,8 +88,17 @@ namespace Simulator {
 
                 node->data.xCentreMass /= node->data.total_mass;
                 node->data.yCentreMass /= node->data.total_mass;
+                node->data.particle = Particle(node->data.total_mass,
+                                               node->data.xCentreMass,
+                                               node->data.yCentreMass, 0, 0);
+            }
 
-            } else if (!node->children.empty()) {
+            for (auto child: node->children) {
+                updateCentreMass(particles, child);
+            }
+
+            /*
+            else if (!node->children.empty()) {
 
                 for (auto child: node->children) {
                     updateCentreMass(particles, child);
@@ -100,6 +110,7 @@ namespace Simulator {
                 node->data.xCentreMass /= node->data.total_mass;
                 node->data.yCentreMass /= node->data.total_mass;
             }
+             */
         }
 
         float dist(float x0, float y0, float x1, float y1) {
@@ -126,7 +137,36 @@ namespace Simulator {
         }
 
     public:
+
         void updateParticle(Particle *particles, int i, Node<int, NodeData> *node, sf::RenderWindow &window) {
+
+            if (node->points.empty() && node->children.empty()) {
+                return;
+            }
+
+            if (!node->children.empty()) {
+                for (Node<int, NodeData> *child: node->children) {
+                    updateParticle(particles, i, child, window);
+                }
+                return;
+            }
+
+            auto d = dist(particles[i].pos.x, particles[i].pos.y, node->data.xCentreMass, node->data.yCentreMass);
+            if (d > 100) {
+                particles[i].attractedBy(node->data.particle);
+            } else {
+                for (auto &point: node->points) {
+                    auto j = point.data;
+                    if (i != j) {
+                        particles[i].attractedBy(particles[j]);
+                    }
+                    // drawRegion(window, node);
+                    // drawCircle(particles[j], window, sf::Color::White);
+                }
+            }
+        }
+
+        void updateParticle2(Particle *particles, int i, Node<int, NodeData> *node, sf::RenderWindow &window) {
 
             if (node->points.empty() && node->children.empty()) {
                 return;

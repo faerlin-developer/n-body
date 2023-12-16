@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     auto window = sf::RenderWindow(sf::VideoMode(800, 800), "SFML works!");
     centerWindow(&window);
 
-    auto N = 1100;
+    auto N = 1000;
     auto particles = new Particle[N];
     for (int i = 0; i < N; i++) {
         // auto mass = random(5, 15);

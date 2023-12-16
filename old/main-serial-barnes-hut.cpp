@@ -98,7 +98,6 @@ int main(int argc, char *argv[]) {
     int frames = 0;
     sf::Clock clock_total;
     sf::Clock clock_update;
-    sf::Clock clock_draw;
 
     window.setFramerateLimit(24);
 
@@ -117,9 +116,11 @@ int main(int argc, char *argv[]) {
         simulator.updateCentreMass(particles, simulator.qTree->root);
         // draw(window, simulator.qTree->root);
 
+        clock_update.restart();
         for (int i = 0; i < N; i++) {
             simulator.updateParticle(particles, i, simulator.qTree->root, window);
         }
+        auto update_time = clock_update.getElapsedTime();
         // drawCircle(particles[0], window);
 
         for (int i = 0; i < N; i++) {
@@ -137,8 +138,10 @@ int main(int argc, char *argv[]) {
         if (frames % 24 == 0) {
             auto total_time_s = total_time.asSeconds();
             auto frame_rate = 1.f / total_time_s;
-            std::cout << frame_rate << std::endl;
+            std::cout << frame_rate << " " << update_time.asSeconds() << " " << total_time_s << std::endl;
         }
+
+        frames++;
     }
 
     window.close();
