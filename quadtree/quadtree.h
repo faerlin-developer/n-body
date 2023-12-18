@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "region.h"
+#include "math/region.h"
 #include "point.h"
 #include "node.h"
 

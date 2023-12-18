@@ -4,6 +4,8 @@
 #include "math/particle.h"
 #include "simulator.h"
 #include "quadtree/quadtree.h"
+#include "graphics/draw.h"
+#include "simulator.h"
 
 class BarnesHut : public Simulator {
 
@@ -13,7 +15,7 @@ public:
 
     BarnesHut() : qTree(nullptr) {}
 
-    void updateAcceleration(Particle *particles, int size, int start, int end) override {
+    void updateAcceleration(Particle *particles, int start, int end, int size) override {
 
         updateQuadTree(particles, size);
 
@@ -26,7 +28,7 @@ public:
         }
     }
 
-    void updatePosition(Particle *particles, int size, int start, int end) override {
+    void updatePosition(Particle *particles, int start, int end, int size) override {
 
         for (int i = start; i <= end; i++) {
             particles[i].vel = particles[i].vel + particles[i].acc;
@@ -35,7 +37,16 @@ public:
         }
     }
 
-    ~BarnesHut() {
+    void draw(Particle *particles, int size, sf::RenderWindow *window, bool drawRegion) {
+
+        draw::particles(particles, size, window);
+
+        if (drawRegion) {
+            draw::drawRegion(qTree->root, window);
+        }
+    }
+
+    ~BarnesHut() override {
         delete qTree;
     }
 
@@ -47,7 +58,7 @@ private:
         delete qTree;
 
         // Create new quad tree
-        auto region = getConvexRegion(particles, size);
+        auto region = Particle::getConvexRegion(particles, size);
         qTree = new QuadTree<PointData, NodeData>(region, 8);
 
         // Populate quad tree with points
@@ -113,8 +124,7 @@ private:
             assert(!leaf->points.empty());
             assert(leaf->data.total_mass != 0);
 
-            auto distance = dist(particles[i].pos.x, particles[i].pos.y, leaf->data.xCentreMass,
-                                 leaf->data.yCentreMass);
+            auto distance = particles[i].dist(leaf->data.xCentreMass, leaf->data.yCentreMass);
 
             if (distance > 100) {
 
@@ -132,30 +142,4 @@ private:
             }
         }
     }
-
-    static Region::Rectangle getConvexRegion(Particle *particles, int size) {
-
-        auto xMax = std::numeric_limits<float>::min();
-        auto xMin = std::numeric_limits<float>::max();
-        auto yMax = std::numeric_limits<float>::min();
-        auto yMin = std::numeric_limits<float>::max();
-        for (int i = 0; i < size; i++) {
-            xMax = std::max(xMax, particles[i].pos.x);
-            xMin = std::min(xMin, particles[i].pos.x);
-            yMax = std::max(yMax, particles[i].pos.y);
-            yMin = std::min(yMin, particles[i].pos.y);
-        }
-
-        auto width = (xMax - xMin) / 2.0f;
-        auto height = (yMax - yMin) / 2.0f;
-        auto xCenter = xMin + width;
-        auto yCenter = yMin + height;
-
-        return {xCenter, yCenter, width, height};
-    }
-
-    static float dist(float x0, float y0, float x1, float y1) {
-        return std::sqrt(std::pow(x1 - x0, 2) + std::pow(y1 - y0, 2));
-    }
-
 };

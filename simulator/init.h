@@ -1,6 +1,10 @@
 #pragma once
 
 #include <random>
+#include "args/args.h"
+#include "barneshut.h"
+#include "naive.h"
+#include "graphics/screen.h"
 #include "math/particle.h"
 
 namespace init {
@@ -28,4 +32,22 @@ namespace init {
         }
     }
 
+    void falsify(int *flag) {
+        *flag = false;
+    }
+
+    Simulator *simulator(args::SimulatorType simulatorType) {
+
+        Simulator *simulator;
+        switch (simulatorType) {
+            case args::Naive:
+                simulator = new Naive();
+                break;
+            case args::BarnesHut:
+                simulator = new BarnesHut;
+                break;
+        }
+
+        return simulator;
+    }
 }
