@@ -2,10 +2,10 @@
 
 #include <cassert>
 #include "math/particle.h"
-#include "simulator.h"
+#include "simulator/simulator.h"
+#include "simulator/data.h"
 #include "quadtree/quadtree.h"
 #include "graphics/draw.h"
-#include "simulator.h"
 
 class BarnesHut : public Simulator {
 

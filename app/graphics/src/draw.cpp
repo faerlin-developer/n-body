@@ -1,14 +1,15 @@
-#pragma once
+//
+// Created by faerlin on 12/18/23.
+//
 
+#include <SFML/Graphics.hpp>
+#include "graphics/draw.h"
+#include "math/particle.h"
+#include "math/region.h"
 #include "quadtree/node.h"
+#include "simulator/data.h"
 
 namespace draw {
-
-    void particles(Particle *particles, int size, sf::RenderWindow *window);
-
-    void drawRegion(Node<PointData, NodeData> *node, sf::RenderWindow *window);
-
-    void drawRectangle(Region::Rectangle &rect, sf::RenderWindow *window);
 
     void particles(Particle *particles, int size, sf::RenderWindow *window) {
         for (int i = 0; i < size; i++) {
@@ -42,4 +43,5 @@ namespace draw {
         rectangle.setOutlineThickness(1.0f);
         window->draw(rectangle);
     }
-};
+
+}

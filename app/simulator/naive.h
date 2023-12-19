@@ -1,7 +1,7 @@
 #pragma once
 
 #include "math/particle.h"
-#include "simulator.h"
+#include "simulator/simulator.h"
 
 class Naive : public Simulator {
 

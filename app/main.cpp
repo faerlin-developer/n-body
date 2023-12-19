@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
         mpi::query<Particle>(particles_window, mpi::ROOT, &particles);
         mpi::query<int>(close_window, mpi::ROOT, &close_flag);
 
-        run(simulator, particles, start, end, N, close_flag, region_flag, MPI_COMM_SHARED);
+        run(simulator, particles, start, end, N, close_flag, MPI_COMM_SHARED);
     }
 
     delete simulator;
@@ -78,10 +78,8 @@ int main(int argc, char *argv[]) {
     return EXIT_SUCCESS;
 }
 
-void runRoot(Simulator *simulator,
-             Particle *particles, int start, int end, int N,
-             int *close_flag, int region_flag,
-             MPI_Comm comm) {
+void runRoot(Simulator *simulator, Particle *particles, int start, int end, int N,
+             int *close_flag, int region_flag, MPI_Comm comm) {
 
     //
     int frames = 0;
@@ -100,13 +98,13 @@ void runRoot(Simulator *simulator,
         }
 
         //
-        mpi::barrier(comm);
         timer.start("update");
+        mpi::barrier(comm);
         simulator->updateAcceleration(particles, start, end, N);
         mpi::barrier(comm);
         simulator->updatePosition(particles, start, end, N);
-        timer.end("update");
         mpi::barrier(comm);
+        timer.end("update");
 
         //
         screen.clear();
@@ -128,11 +126,7 @@ void runRoot(Simulator *simulator,
     mpi::barrier(comm);
 }
 
-void run(Simulator *simulator,
-         Particle *particles, int start, int end, int N,
-         int *close_flag,
-         int region_flag,
-         MPI_Comm comm) {
+void run(Simulator *simulator, Particle *particles, int start, int end, int N, int *close_flag, MPI_Comm comm) {
 
     while (true) {
 

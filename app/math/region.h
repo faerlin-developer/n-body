@@ -14,8 +14,7 @@ namespace Region {
         float w;        // half of rectangle's width.
         float h;        // half of rectangle's height.
 
-        Rectangle(float xCenter, float yCenter, float w, float h)
-                : xCenter(xCenter), yCenter(yCenter), w(w), h(h) {}
+        Rectangle(float xCenter, float yCenter, float w, float h);
 
         /**
          * Returns true if the given x,y coordinate is within the boundary of this rectangle.
@@ -24,11 +23,6 @@ namespace Region {
          * @param y y-coordinate of a point.
          * @return
          */
-        bool contains(float x, float y) const {
-            auto containsX = this->xCenter - this->w <= x && x <= this->xCenter + this->w;
-            auto containsY = this->yCenter - this->h <= y && y <= this->yCenter + this->h;
-            return containsX && containsY;
-        }
+        bool contains(float x, float y) const;
     };
-
 }

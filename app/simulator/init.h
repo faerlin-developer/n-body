@@ -2,8 +2,8 @@
 
 #include <random>
 #include "args/args.h"
-#include "barneshut.h"
-#include "naive.h"
+#include "simulator/barneshut.h"
+#include "simulator/naive.h"
 #include "graphics/screen.h"
 #include "math/particle.h"
 
