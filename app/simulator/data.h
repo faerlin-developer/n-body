@@ -1,12 +1,14 @@
 #pragma once
 
+#include "math/particle.h"
+
 class PointData {
 public:
     int index;
 
-    PointData() : index(0) {}
+    PointData();
 
-    explicit PointData(int index) : index(index) {}
+    explicit PointData(int index);
 };
 
 class NodeData {
@@ -16,8 +18,7 @@ public:
     float yCentreMass;
     Particle particle;
 
-    NodeData() : total_mass(0), xCentreMass(0), yCentreMass(0), particle(particle) {}
+    NodeData();
 
-    NodeData(float total_mass, float xCentreMass, float yCentreMass, Particle particle) :
-            total_mass(total_mass), xCentreMass(xCentreMass), yCentreMass(yCentreMass), particle(particle) {}
+    NodeData(float total_mass, float xCentreMass, float yCentreMass, Particle particle);
 };

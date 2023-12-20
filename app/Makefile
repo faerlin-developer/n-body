@@ -14,4 +14,4 @@ build:
 	mpicxx -o main main.cpp */*/*.cpp -I . -lsfml-graphics -lsfml-window -lsfml-system
 
 run:
-	mpiexec -n $(NUM_MPI_PROCESS) ./main $(NAIVE) $(NUM_PARTICLES) $(DRAW_REGION_OPT)
+	mpiexec -n $(NUM_MPI_PROCESS) ./main $(BARNES_HUT) $(NUM_PARTICLES) $(DRAW_REGION_OPT)
