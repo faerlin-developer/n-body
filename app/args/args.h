@@ -58,6 +58,12 @@ namespace args {
 
     /**
      *
+     * @return
+     */
+    SimulatorType toSimulatorType(std::string simulator);
+
+    /**
+     *
      * @param args
      */
     void print(Arguments args);

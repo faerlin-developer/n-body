@@ -81,23 +81,21 @@ int main(int argc, char *argv[]) {
 void runRoot(Simulator *simulator, Particle *particles, int start, int end, int N,
              int *close_flag, int region_flag, MPI_Comm comm) {
 
-    //
     int frames = 0;
     auto timer = Timer();
     auto screen = Screen(args::SCREEN_WIDTH, args::SCREEN_HEIGHT, args::FRAME_RATE);
 
-    //
+    printInfoHeader();
+
     while (screen.isOpen()) {
 
         timer.start("total");
 
-        //
         auto done = screen.pollEvent();
         if (done) {
             break;
         }
 
-        //
         timer.start("update");
         mpi::barrier(comm);
         simulator->updateAcceleration(particles, start, end, N);
@@ -106,7 +104,6 @@ void runRoot(Simulator *simulator, Particle *particles, int start, int end, int 
         mpi::barrier(comm);
         timer.end("update");
 
-        //
         screen.clear();
         timer.start("draw");
         simulator->draw(particles, N, screen.window, region_flag);
@@ -137,15 +134,15 @@ void run(Simulator *simulator, Particle *particles, int start, int end, int N, i
         }
 
         simulator->updateAcceleration(particles, start, end, N);
-
         mpi::barrier(comm);
-
         simulator->updatePosition(particles, start, end, N);
-
         mpi::barrier(comm);
-
     }
 
+}
+
+void printInfoHeader() {
+    std::cout << "# " << "columns: frame_rate update_time draw_time" << std::endl;
 }
 
 void printInfo(Timer &timer) {

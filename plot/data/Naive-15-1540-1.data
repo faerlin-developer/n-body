@@ -1,0 +1,8 @@
+# number of particles: 1540
+# draw region: false
+# simulator type: Naive
+# columns: frame_rate update_time draw_time
+5.83  0.957 0.0314
+6.04  0.98 0.0203
+6.07  0.98 0.0203
+6.1   0.979 0.0204

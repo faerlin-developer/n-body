@@ -1,0 +1,10 @@
+# number of particles: 1540
+# draw region: false
+# simulator type: BarnesHut
+# columns: frame_rate update_time draw_time
+9.68  0.942 0.0545
+8.75  0.97 0.0294
+10.1  0.965 0.0344
+10    0.966 0.0339
+8.56  0.971 0.0287
+10.1  0.965 0.0342

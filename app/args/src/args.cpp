@@ -14,7 +14,7 @@ namespace args {
                     args.numberOfParticles = std::stoi(optarg);
                     break;
                 case 's':
-                    args.simulatorType = SimulatorType(std::stoi(optarg));
+                    args.simulatorType = toSimulatorType(optarg);
                     break;
                 case 'r':
                     args.drawRegion = true;
@@ -46,11 +46,20 @@ namespace args {
         return str;
     }
 
+    SimulatorType toSimulatorType(std::string simulator) {
+
+        if (simulator == toString(Naive)) {
+            return Naive;
+        } else if (simulator == toString(BarnesHut)) {
+            return BarnesHut;
+        } else {
+            throw std::invalid_argument("simulator not supported");
+        }
+    }
+
     void print(Arguments args) {
-        std::cout << std::endl;
-        std::cout << "number of particles: " << args.numberOfParticles << std::endl;
-        std::cout << "draw region: " << (args.drawRegion ? "true" : "false") << std::endl;
-        std::cout << "simulator type: " << toString(args.simulatorType) << std::endl;
-        std::cout << std::endl;
+        std::cout << "# " << "number of particles: " << args.numberOfParticles << std::endl;
+        std::cout << "# " << "draw region: " << (args.drawRegion ? "true" : "false") << std::endl;
+        std::cout << "# " << "simulator type: " << toString(args.simulatorType) << std::endl;
     }
 }

@@ -1,4 +1,10 @@
 
+# SAMPLE MAKE COMMANDS:
+#
+# make run
+# make out=true run
+# make simulator=0 duration=2 cores=4 size=100 out=true run
+
 # Build variables
 MAIN_EXE = main
 MAIN_CPP = main.cpp
@@ -8,20 +14,24 @@ SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 # Command line options for MAIN_EXE
 SIMULATOR_OPT = -s
-NUM_PARTICLES_OPT = -n
+SIZE_OPT = -n
 DRAW_REGION_OPT = -r
 
-# Command line arguments for MAIN_EXE
-NUM_MPI_PROCESS = 4
-NAIVE = $(SIMULATOR_OPT) 0
-BARNES_HUT = $(SIMULATOR_OPT) 1
-NUM_PARTICLES = $(NUM_PARTICLES_OPT) 1500
+# Default arguments for target run
+duration = 0s
+cores = 2
+simulator = BarnesHut
+size = 1000
 
 build:
 	mpicxx -o $(MAIN_EXE) $(MAIN_CPP) $(CPP) $(INCLUDE) $(SFML_FLAGS)
 
 run:
-	mpiexec -n $(NUM_MPI_PROCESS) ./$(MAIN_EXE) $(BARNES_HUT) $(NUM_PARTICLES) $(DRAW_REGION_OPT)
+ifdef out
+	timeout $(duration) mpiexec -n $(cores) ./$(MAIN_EXE) $(SIMULATOR_OPT) $(simulator) $(SIZE_OPT) $(size) >> $(simulator)-$(duration)-$(size)-$(cores).data
+else
+	mpiexec -n $(cores) ./$(MAIN_EXE) $(SIMULATOR_OPT) $(simulator) $(SIZE_OPT) $(size) $(DRAW_REGION_OPT)
+endif
 
 clean:
 	rm -rf main

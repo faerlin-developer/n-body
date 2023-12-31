@@ -8,6 +8,8 @@ void runRoot(Simulator *simulator, Particle *particles, int start, int end, int 
 
 void run(Simulator *simulator, Particle *particles, int start, int end, int N, int *close_flag, MPI_Comm comm);
 
+void printInfoHeader();
+
 void printInfo(Timer &timer);
 
 void toggle(int *flag);
