@@ -11,7 +11,9 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#parallelism-using-mpi">Parallelism using MPI</a></li>
+        <li><a href="#quadtree-optimization">Quadtree Optimization</a></li>
+        <li><a href="#performance-on-1540-bodies">Performance on 1540 Bodies</a></li>
       </ul>
     </li>
     <li>
@@ -44,20 +46,15 @@ the following categories:
 - __Optimization__:
 - __initialization__:
 
-## Barnes-Hut Inspired Optimization using a Quadtree
+### Parallelism using MPI
 
-## Parallelism using MPI
+### Quadtree Optimization
 
-## Performance on 1540 Bodies
+### Performance on 1540 Bodies
 
 <div align="center">
     <img src="img/plot.png" width="450">
 </div>
-
-### Built With
-
-* [MPI][mpi-url] Message Passing Interface
-* [SFML][sfml-url] Simple and Fast Multimedia Library
 
 ## Getting Started
 
