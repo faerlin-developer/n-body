@@ -60,7 +60,8 @@ follows:
 
   $$F = \frac{Gm_{1}m_{2}}{r^{2}}$$
 
-  The position of a particle is updated using Euler's integration as follows:
+  and Newton's second law of motion $F = ma$. The position of a particle is updated using Euler's integration as
+  follows:
 
   $$a_{n+1} = a_{n} + \Delta a$$
   $$v_{n+1} = v_{n} + \Delta a_{n+1} \Delta t$$
