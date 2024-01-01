@@ -11,7 +11,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#performance-on-1540-bodies">Performance on 1540 Bodies</a></li>
+        <li><a href="#performance-on-1540-bodies">Performance on N=1540 Bodies</a></li>
       </ul>
     </li>
     <li>
