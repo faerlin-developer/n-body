@@ -62,12 +62,12 @@ follows:
 
   The position of a particle is updated using Euler's integration as follows:
 
-  $$\Delta a = \frac{Gm_{other}}{r^{2}}$$
   $$a_{n+1} = a_{n} + \Delta a$$
   $$v_{n+1} = v_{n} + \Delta a_{n+1} \Delta t$$
   $$p_{n+1} = p_{n} + \Delta v_{n+1} \Delta t$$
 
-  where the value of $\Delta t$ is taken as 1.
+  where the value of $\Delta t$ is taken as 1 and $\Delta a$ is the vector sum of all acceleration change due to all
+  other particles in the system.
 
 ### Performance on N=1540 Bodies
 
