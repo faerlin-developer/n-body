@@ -36,8 +36,8 @@
 </div>
 <br/>
 
-This application simulates the trajectories of bodies in an N-body system. Its main features can be summarized into four
-categories:
+This application simulates the trajectories of bodies in an N-body system. Its main features can be summarized as
+follows:
 
 - __Visualization__: The motion of particles is animated using the [SFML][sfml-url] library.
 - __Parallelization__: The application is an [MPI][mpi-url] program that delegates the computation into a configurable
