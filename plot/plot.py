@@ -29,7 +29,7 @@ def plotFrameRate(ax, data):
     (_, caps1, _) = ax.errorbar(barnes_x, barnes_y, barnes_std,
                                 color='blue', marker='.', markersize=8, capsize=3,
                                 linestyle='--', linewidth=1.0,
-                                label='Barnes-Hut Inspired')
+                                label='Quadtree Optimization')
 
     (_, caps2, _) = ax.errorbar(naive_x, naive_y, naive_std,
                                 color='red', marker='.', markersize=8, capsize=3,
@@ -43,7 +43,8 @@ def plotFrameRate(ax, data):
 
     ax.set_xlabel('Number of Cores', fontsize=16)
     ax.set_ylabel('Frame Rate (Hz)', fontsize=16)
-    ax.set_title('Performance of N-Body Simulation', fontsize=16)
+    ax.set_title('Performance of N-Body Simulation (N=1540)', fontsize=16)
+    ax.tick_params(axis='both', which='major', labelsize=12)
     ax.legend(loc='lower right', prop={'size': 14})
 
 
