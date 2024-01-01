@@ -30,8 +30,7 @@
 
 <br/>
 <div align="center">
-    <img src="img/screenshot1.png" width="400">
-    <img src="img/screenshot2.png" width="400">
+    <img src="img/screenshot.png" width="700">
 </div>
 <br/>
 
