@@ -2,7 +2,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <div align="center">
-    <h3 align="center">N-Body Simulation</h3>
+    <h3 align="center">N-Body Simulation Using MPI</h3>
 </div>
 
 <details>
