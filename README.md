@@ -11,8 +11,6 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#parallelism-using-mpi">Parallelism using MPI</a></li>
-        <li><a href="#quadtree-optimization">Quadtree Optimization</a></li>
         <li><a href="#performance-on-1540-bodies">Performance on 1540 Bodies</a></li>
       </ul>
     </li>
@@ -47,10 +45,6 @@ categories:
 - __Optimization__: The application offers two modes for computing the acceleration of the particles. In the brute-force
   approach, the acceleration of a particle must be adjusted by the gravitational influence from each particle in the
   system. Since this must be done for each particle in the system, this results to a time complexity of O($n^{2}$).
-
-### Parallelism using MPI
-
-### Quadtree Optimization
 
 ### Performance on 1540 Bodies
 
