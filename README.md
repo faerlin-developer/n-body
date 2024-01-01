@@ -41,7 +41,7 @@ follows:
 
 - __Visualization__: The motion of particles is animated using the [SFML][sfml-url] library.
 - __Parallelization__: The application is an [MPI][mpi-url] program that delegates the computation into a configurable
-  number of MPI processes. The root process is responsible for updating the screen with the positions of the new
+  number of MPI processes. The root process is responsible for updating the screen with the new positions of the
   particles. All processes share an array of objects of type `Particle`, an instance of which holds information such as
   mass, radius, position, velocity, and acceleration. Only one copy of this array exists and is shared among all
   processes using _MPI-3 shared memory programming_. This brings us into an important assumption that is made when
