@@ -58,7 +58,11 @@ follows:
   are leaf nodes in the quadtree.
 - __Mechanics__: The dynamics of the system is governed by Newton's law of gravity:
 
-$$F = \frac{Gm_{1}m_{2}}{r^{2}}$$
+  $$F = \frac{Gm_{1}m_{2}}{r^{2}}$$
+
+  The position of a particle is updated using Euler's integration as follows:
+
+  $$\delta a$$
 
 ### Performance on N=1540 Bodies
 
