@@ -67,8 +67,8 @@ follows:
   $$v_{n+1} = v_{n} + \Delta a_{n+1} \Delta t$$
   $$p_{n+1} = p_{n} + \Delta v_{n+1} \Delta t$$
 
-  where the value of $\Delta t$ is taken as 1 and $\Delta a$ is the vector sum of all acceleration change due to all
-  other particles in the system.
+  where the value of $\Delta t$ is taken as 1 and $\Delta a$ is the vector sum of all acceleration change due to the
+  gravitational influence of all other particles in the system.
 
 ### Performance on N=1540 Bodies
 
