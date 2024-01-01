@@ -41,10 +41,21 @@ follows:
 
 - __Visualization__: The motion of particles is animated using the [SFML][sfml-url] library.
 - __Parallelization__: The application is an [MPI][mpi-url] program that delegates the computation into a configurable
-  number of processes.
+  number of MPI processes. The root process is responsible for updating the screen with the positions of the new
+  particles. All processes share an array of objects of type `Particle`, an instance of which holds information such as
+  mass, radius, position, velocity, and acceleration. Only one copy of this array exists and is shared among all
+  processes using _MPI-3 shared memory programming_. This brings us into an important assumption that is made when
+  running this application: __The application must be executed with MPI processes that all belong to the same memory
+  domain__. In other words, when running this application in a multi-node cluster, restrict the execution to a single
+  node in which all ranks in `MPI_COMM_WORLD` belong to same memory domain.
 - __Optimization__: The application offers two modes for computing the acceleration of the particles. In the brute-force
   approach, the acceleration of a particle must be adjusted by the gravitational influence from each particle in the
-  system. Since this must be done for each particle in the system, this results to a time complexity of O($n^{2}$).
+  system. Since this must be done for each particle in the system, this results to a time complexity of O($n^{2}$). The
+  second approach is a modification of the Barnes-Hut algorithm which uses a quadtree to group particles that are close
+  to each other. When a group is sufficiently far away, it is treated as a single particle with a mass and position
+  equal to the group's total mass and centre of mass, respectively. In this application, we only consider groups that
+  are leaf nodes in the quadtree.
+- __Numerical method__: TODO
 
 ### Performance on N=1540 Bodies
 
