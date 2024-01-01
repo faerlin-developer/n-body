@@ -62,7 +62,7 @@ follows:
 
   The position of a particle is updated using Euler's integration as follows:
 
-  $$\delta a$$
+  $$\Delta a$$
 
 ### Performance on N=1540 Bodies
 
