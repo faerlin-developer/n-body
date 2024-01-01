@@ -37,11 +37,18 @@
 <br/>
 
 This application simulates the trajectories of bodies in an N-body system. Its main features can be summarized into
-three broad categories:
+the following categories:
 
-- __Visualization__: The motion of the particles in system is animated using the [SFML][sfml-url] library.
-- __Parallelization__:
+- __Visualization__: The motion of particles is animated using the [SFML][sfml-url] library.
+- __Parallelization__: The application is an MPI program that ca
 - __Optimization__:
+- __initialization__:
+
+## Barnes-Hut Inspired Optimization using a Quadtree
+
+## Parallelism using MPI
+
+## Performance on 1540 Bodies
 
 <div align="center">
     <img src="img/plot.png" width="450">
