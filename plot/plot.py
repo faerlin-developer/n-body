@@ -41,10 +41,10 @@ def plotFrameRate(ax, data):
     caps2[0].set_markeredgewidth(1)
     caps2[1].set_markeredgewidth(1)
 
-    ax.set_xlabel('Number of Cores', fontsize=14)
-    ax.set_ylabel('Frame Rate (Hz)', fontsize=14)
-    ax.set_title('Performance of N-Body Simulation', fontsize=14)
-    ax.legend(loc='lower right', prop={'size': 12})
+    ax.set_xlabel('Number of Cores', fontsize=16)
+    ax.set_ylabel('Frame Rate (Hz)', fontsize=16)
+    ax.set_title('Performance of N-Body Simulation', fontsize=16)
+    ax.legend(loc='lower right', prop={'size': 14})
 
 
 def getXY(data, simulator):
