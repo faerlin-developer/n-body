@@ -39,7 +39,7 @@
 This application simulates the trajectories of bodies in an N-body system. Its main features can be summarized into
 three broad categories:
 
-- __Visualization__:
+- __Visualization__: The motion of the particles in system is animated using the [SFML][sfml-url] library.
 - __Parallelization__:
 - __Optimization__:
 
