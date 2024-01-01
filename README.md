@@ -62,7 +62,10 @@ follows:
 
   The position of a particle is updated using Euler's integration as follows:
 
-  $$\Delta a$$
+  $$\Delta a = \frac{Gm}{r^{2}}$$
+  $$a_{n+1} = a_{n} + \Delta a \Delta t$$  
+  $$v_{n+1} = v_{n} + \Delta a_{n+1} \Delta t$$
+  $$p_{n+1} = p_{n} + \Delta v_{n+1} \Delta t$$
 
 ### Performance on N=1540 Bodies
 
