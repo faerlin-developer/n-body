@@ -47,7 +47,8 @@ follows:
   processes using _MPI-3 shared memory programming_. This brings us into an important assumption that is made when
   running this application: __The application must be executed with MPI processes that all belong to the same memory
   domain__. In other words, when running this application in a multi-node cluster, restrict the execution to a single
-  node in which all ranks in `MPI_COMM_WORLD` belong to same memory domain.
+  node in which all ranks in `MPI_COMM_WORLD` belong to same memory domain. Each process is assigned a contiguous
+  segment of the array for updating particle data.
 - __Optimization__: The application offers two modes for computing the acceleration of the particles. In the brute-force
   approach, the acceleration of a particle must be adjusted by the gravitational influence from each particle in the
   system. Since this must be done for each particle in the system, this results to a time complexity of O($n^{2}$). The
