@@ -32,7 +32,7 @@
 <div align="center">
     <img src="img/screenshot.png" width="700">
     <br/>
-    <figcaption>Figure 1. Simulation of 1000 particles. The red bounding boxes in the right window represent the decomposition of space into sub-quadrants by the quadtree data structure.</figcaption>
+    <figcaption>Figure 1. Simulation of 1000 particles. The red bounding boxes in the right screenshot represent the decomposition of space into sub-quadrants by the quadtree data structure.</figcaption>
 </div>
 <br/>
 
