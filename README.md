@@ -46,7 +46,7 @@ categories:
   approach, the acceleration of a particle must be adjusted by the gravitational influence from each particle in the
   system. Since this must be done for each particle in the system, this results to a time complexity of O($n^{2}$).
 
-### Performance on 1540 Bodies
+### Performance on N=1540 Bodies
 
 <div align="center">
     <img src="img/plot.png" width="450">
