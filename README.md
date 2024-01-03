@@ -150,7 +150,7 @@ $ mpiexec -n 4 ./main -s Naive -n 1000
 ```
 
 which uses 4 cores, the naive brute-force approach for computing the particle states and a problem size of 1000
-particles. You can add the `-r` flag to draw the sub-quadrants when using quadtree approach.
+particles. You can add the `-r` flag to draw the sub-quadrants when using the quadtree approach.
 
 ## License
 
