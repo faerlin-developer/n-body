@@ -3,7 +3,7 @@
 #
 # make run
 # make out=true run
-# make simulator=0 duration=2 cores=4 size=100 out=true run
+# make simulator=BarnesHut duration=10 size=1000 cores=4 run
 
 # Build variables
 MAIN_EXE = main
@@ -30,7 +30,7 @@ run:
 ifdef out
 	timeout $(duration) mpiexec -n $(cores) ./$(MAIN_EXE) $(SIMULATOR_OPT) $(simulator) $(SIZE_OPT) $(size) >> $(simulator)-$(duration)-$(size)-$(cores).data
 else
-	mpiexec -n $(cores) ./$(MAIN_EXE) $(SIMULATOR_OPT) $(simulator) $(SIZE_OPT) $(size) $(DRAW_REGION_OPT)
+	mpiexec -n $(cores) ./$(MAIN_EXE) $(SIMULATOR_OPT) $(simulator) $(SIZE_OPT) $(size)
 endif
 
 clean:

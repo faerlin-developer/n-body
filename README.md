@@ -21,7 +21,6 @@
         <li><a href="#running-the-application">Running the Application</a></li>
       </ul>
     </li>
-    <li><a href="#improvements">Improvements</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -72,9 +71,24 @@ follows:
 
 ### Performance on N=1540 Bodies
 
+We use the observed frame rate as a metric for the performance of the application. We conducted an experiment of running
+the application for 1540 particles across varying number of processor cores. We compare the performance of the two
+algorithms for computing the state of the particles: (1) Naive brute-force approach that has a time-complexity of O(
+$n^{2}$) and (2) Quadtree approach inspired by the Barnes-Hut algorithm. The result of the experiment is plotted in
+Figure 2.
+
 <div align="center">
     <img src="img/plot.png" width="450">
+  <figcaption>Figure 2. Frame rate versus number of cores for a problem size of 1540 particles.</figcaption>
 </div>
+
+A few remarks can be made base on the figure above:
+
+- The quadtree approach outperforms the naive approach across any number of cores.
+- Only the quadtree approach (when using 4 cores) achieves a frame rate above 24 Hz (the gold standard for film).
+- For both the naive and quadtree approach, the frame rate peaks when using 4 cores. Above 4 cores, using more cores
+  does not result to an improved performance. Further investigation on the cost of using MPI-3 shared memory programming
+  is needed to explain this observation.
 
 ## Getting Started
 
@@ -82,9 +96,58 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
+The application uses SFML for animation and MPI for distributing the workload across multiple processes. You can consult
+the official websites of [SFML](sfml-url) and [MPICH](mpich-url) for installation instruction on your preferred OS. If
+your local environment is Ubuntu, you can install these dependencies by running:
+
+```bash
+$ sudo apt-get install libsfml-dev
+$ sudo apt install mpich
+```
+
 ### Running the Application
 
-## Improvements
+Build the application
+
+```bash
+$ cd app
+$ make
+```
+
+There are two ways to run the application:
+
+1. Calling the target `run` of the `Makefile`
+2. Launching the application using `mpiexec`
+
+#### Running via the Makefile
+
+The target `run` in the Makefile can take the following parameters:
+
+| Parameter   |   Default   | Description                                                                                                                                                                                                                                                                                                                   |
+|-------------|:-----------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `simulator` | `BarnesHut` | The algorithm used to compute the state (acceleration, velocity, and position) of the particles. Possible arguments are `Naive` and `BarnesHut`. The `Naive` algorithm has a time complexity of O($n^{2}$). When the argument is to `BarnesHut`, it uses a quadtree and an optimization inspired by the Barnes-Hut algorithm. |  
+| `size`      |   `1000`    | The number of particles in the N-body system.                                                                                                                                                                                                                                                                                 |
+| `cores`     |     `2`     | The number of MPI processes.                                                                                                                                                                                                                                                                                                  |
+| `duration`  |    `0s`     | The argument to the `timeout` command. The default argument of `0s` means no timeout.                                                                                                                                                                                                                                         |
+
+Here are sample run commands using the Makefile:
+
+```bash
+$ make run
+$ make size=1540 cores=4 run
+$ make simulator=BarnesHut duration=10 size=1540 cores=4 out=true run
+```
+
+#### Launching via mpiexec
+
+Here is a sample run command using `mpiexec`:
+
+```bash
+$ mpiexec -n 4 ./main -s Naive -n 1000
+```
+
+which uses 4 cores, the naive brute-force approach for computing the particle states and a problem size of 1000
+particles.
 
 ## License
 
@@ -100,6 +163,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [sfml-url]: https://www.sfml-dev.org/
 
 [mpi-url]: https://www.mpi-forum.org/
+
+[mpich-url]: https://www.mpich.org/
 
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 
