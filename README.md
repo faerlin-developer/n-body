@@ -85,7 +85,7 @@ Figure 2.
 
 <br/>
 
-A few remarks can be made base on the figure above:
+A few remarks can be made on the figure above:
 
 - The quadtree approach outperforms the naive approach across any number of cores.
 - Only the quadtree approach (when using 4 cores) achieves a frame rate above 24 Hz (the gold standard for film).
