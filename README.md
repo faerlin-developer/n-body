@@ -83,6 +83,8 @@ Figure 2.
     <figcaption>Figure 2. Frame rate versus number of cores for a problem size of 1540 particles.</figcaption>
 </div>
 
+<br/>
+
 A few remarks can be made base on the figure above:
 
 - The quadtree approach outperforms the naive approach across any number of cores.
