@@ -6,24 +6,15 @@
 
 namespace args {
 
-    /**
-     *
-     */
     static const int SCREEN_WIDTH = 800;
     static const int SCREEN_HEIGHT = 800;
     static const int FRAME_RATE = 128;
 
-    /**
-     *
-     */
     enum SimulatorType {
         Naive, BarnesHut
     };
 
 
-    /**
-     *
-     */
     struct Arguments {
 
     private:
@@ -41,30 +32,11 @@ namespace args {
         SimulatorType simulatorType{DEFAULT_SIMULATOR_TYPE};
     };
 
-    /**
-     *
-     * @param argc
-     * @param argv
-     * @return
-     */
     Arguments parse(int argc, char *argv[]);
 
-    /**
-     *
-     * @param simulatorType
-     * @return
-     */
     std::string toString(SimulatorType simulatorType);
 
-    /**
-     *
-     * @return
-     */
     SimulatorType toSimulatorType(std::string simulator);
 
-    /**
-     *
-     * @param args
-     */
     void print(Arguments args);
 }

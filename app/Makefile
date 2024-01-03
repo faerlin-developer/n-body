@@ -1,10 +1,4 @@
 
-# SAMPLE MAKE COMMANDS:
-#
-# make run
-# make out=true run
-# make simulator=BarnesHut duration=10 size=1000 cores=4 run
-
 # Build variables
 MAIN_EXE = main
 MAIN_CPP = main.cpp

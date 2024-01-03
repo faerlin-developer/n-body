@@ -16,13 +16,6 @@ namespace Region {
 
         Rectangle(float xCenter, float yCenter, float w, float h);
 
-        /**
-         * Returns true if the given x,y coordinate is within the boundary of this rectangle.
-         *
-         * @param x x-coordinate of a point.
-         * @param y y-coordinate of a point.
-         * @return
-         */
         bool contains(float x, float y) const;
     };
 }

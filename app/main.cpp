@@ -9,10 +9,6 @@
 #include "graphics/screen.h"
 #include "graphics/timer.h"
 
-/**
- * Assumptions:
- * 1. All MPI processes are bound to cores belonging to the same memory domain.
- */
 int main(int argc, char *argv[]) {
 
     auto args = args::parse(argc, argv);

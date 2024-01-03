@@ -16,9 +16,6 @@ public:
 
     bool isOpen() const;
 
-    /**
-     * @return true if event is close.
-     */
     bool pollEvent() const;
 
     void clear() const;
