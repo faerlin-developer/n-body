@@ -79,7 +79,8 @@ Figure 2.
 
 <div align="center">
     <img src="img/plot.png" width="450">
-  <figcaption>Figure 2. Frame rate versus number of cores for a problem size of 1540 particles.</figcaption>
+    <br/>
+    <figcaption>Figure 2. Frame rate versus number of cores for a problem size of 1540 particles.</figcaption>
 </div>
 
 A few remarks can be made base on the figure above:
