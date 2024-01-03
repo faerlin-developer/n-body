@@ -138,7 +138,7 @@ Here are sample run commands using the Makefile:
 ```bash
 $ make run
 $ make size=1540 cores=4 run
-$ make simulator=BarnesHut duration=10 size=1540 cores=4 out=true run
+$ make simulator=BarnesHut duration=10 size=1540 cores=4 run
 ```
 
 #### Launching via mpiexec
@@ -150,7 +150,7 @@ $ mpiexec -n 4 ./main -s Naive -n 1000
 ```
 
 which uses 4 cores, the naive brute-force approach for computing the particle states and a problem size of 1000
-particles.
+particles. You can add the `-r` flag to draw the sub-quadrants when using quadtree approach.
 
 ## License
 
