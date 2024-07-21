@@ -24,7 +24,7 @@ run:
 ifdef out
 	timeout $(duration) mpiexec -n $(cores) ./$(MAIN_EXE) $(SIMULATOR_OPT) $(simulator) $(SIZE_OPT) $(size) >> $(simulator)-$(duration)-$(size)-$(cores).data
 else
-	mpiexec -n $(cores) ./$(MAIN_EXE) $(SIMULATOR_OPT) $(simulator) $(SIZE_OPT) $(size)
+	mpiexec -n $(cores) ./$(MAIN_EXE) $(SIMULATOR_OPT) $(simulator) $(SIZE_OPT) $(size) $(DRAW_REGION_OPT)
 endif
 
 clean:

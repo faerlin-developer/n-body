@@ -69,6 +69,10 @@ follows:
   where the value of $\Delta t$ is taken as 1 and $\Delta a$ is the vector sum of all acceleration change due to the
   gravitational influence of all other particles in the system.
 
+<div align="center">
+<img class="animated-gif" src="img/n-body-tree.gif" width="400">
+</div>
+
 ### Performance on N=1540 Bodies
 
 We use the observed frame rate as a metric for the performance of the application. We conducted an experiment of running
@@ -172,3 +176,5 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+
+<!-- ffmpeg -i Screencast\ from\ 2024-07-21\ 03\:49\:39\ PM.webm -pix_fmt rgb24 output.gif -->
