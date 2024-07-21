@@ -68,7 +68,7 @@ follows:
 <div align="center">
   <img class="animated-gif" src="img/n-body-tree.gif" width="400">
   <br/>
-  <figcaption>Figure 2. Simulation of 1000 particles binned in a quadtree.</figcaption>
+  <figcaption>Figure 2. Simulation of 1000 particles.</figcaption>
 </div>
 
 ### Performance on N=1540 Bodies
