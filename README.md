@@ -55,12 +55,8 @@ follows:
   to each other. When a group is sufficiently far away, it is treated as a single particle with a mass and position
   equal to the group's total mass and centre of mass, respectively. In this application, we only consider groups that
   are leaf nodes in the quadtree.
-- __Mechanics__: The dynamics of the system is governed by Newton's law of gravity:
-
-  $$F = \frac{Gm_{1}m_{2}}{r^{2}}$$
-
-  and Newton's second law of motion $F = ma$. The position of a particle is updated using Euler's integration as
-  follows:
+- __Mechanics__: The dynamics of the system is governed by Newton's law of gravity $F = \frac{Gm_{1}m_{2}}{r^{2}}$ and
+  Newton's second law of motion $F = ma$. The position of a particle is updated using Euler's integration as follows:
 
   $$a_{n+1} = a_{n} + \Delta a$$ <br>
   $$v_{n+1} = v_{n} + \Delta a_{n+1} \Delta t$$ <br>
