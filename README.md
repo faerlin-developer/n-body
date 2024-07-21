@@ -175,4 +175,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 
-<!-- ffmpeg -i Screencast\ from\ 2024-07-21\ 03\:49\:39\ PM.webm -pix_fmt rgb24 output.gif -->
+<!-- Converting webm to gif -->
+<!-- sudo apt  install ffmpeg -->
+<!-- ffmpeg -i n-body.webm -pix_fmt rgb24 n-body.gif -->
