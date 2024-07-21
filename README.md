@@ -56,14 +56,14 @@ follows:
   equal to the group's total mass and centre of mass, respectively. In this application, we only consider groups that
   are leaf nodes in the quadtree.
 - __Mechanics__: The dynamics of the system is governed by Newton's law of gravity:
-
   $$F = \frac{Gm_{1}m_{2}}{r^{2}}$$
-
   and Newton's second law of motion $F = ma$. The position of a particle is updated using Euler's integration as
   follows:
 
   $$a_{n+1} = a_{n} + \Delta a$$
+
   $$v_{n+1} = v_{n} + \Delta a_{n+1} \Delta t$$
+
   $$p_{n+1} = p_{n} + \Delta v_{n+1} \Delta t$$
 
   where the value of $\Delta t$ is taken as 1 and $\Delta a$ is the vector sum of all acceleration change due to the
