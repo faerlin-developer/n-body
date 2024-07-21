@@ -57,17 +57,13 @@ follows:
   are leaf nodes in the quadtree.
 - __Mechanics__: The dynamics of the system is governed by Newton's law of gravity:
 
-  \begin{align*}
-  F = \frac{Gm_{1}m_{2}}{r^{2}}
-  \end{align*}
+  $$F = \frac{Gm_{1}m_{2}}{r^{2}}$$
 
   and Newton's second law of motion $F = ma$. The position of a particle is updated using Euler's integration as
   follows:
 
   $$a_{n+1} = a_{n} + \Delta a$$
-  <br>
   $$v_{n+1} = v_{n} + \Delta a_{n+1} \Delta t$$
-  <br>
   $$p_{n+1} = p_{n} + \Delta v_{n+1} \Delta t$$
 
   where the value of $\Delta t$ is taken as 1 and $\Delta a$ is the vector sum of all acceleration change due to the
