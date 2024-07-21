@@ -63,19 +63,16 @@ follows:
   follows:
 
   $$a_{n+1} = a_{n} + \Delta a$$
-
   $$v_{n+1} = v_{n} + \Delta a_{n+1} \Delta t$$
-
   $$p_{n+1} = p_{n} + \Delta v_{n+1} \Delta t$$
 
   where the value of $\Delta t$ is taken as 1 and $\Delta a$ is the vector sum of all acceleration change due to the
   gravitational influence of all other particles in the system.
+- <div align="center">
+  <img class="animated-gif" src="img/n-body-tree.gif" width="400">
+  </div>
 
 ### Performance on N=1540 Bodies
-
-<div align="center">
-<img class="animated-gif" src="img/n-body-tree.gif" width="400">
-</div>
 
 We use the observed frame rate as a metric for the performance of the application. We conducted an experiment of running
 the application for 1540 particles across varying number of processor cores. We compare the performance of the two
